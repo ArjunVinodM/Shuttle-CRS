@@ -1,0 +1,178 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .custom-btn {
+        width: 100px; /* You can adjust the width as needed */
+    }
+    .btn:hover .text-black {
+        color: white !important;
+    }
+</style>
+
+<div class="col-lg-12 d-flex align-items-stretch pt-5">
+    <div class="card w-100">
+    <div class="card-body p-4">
+        <h5 class="card-title d-flex justify-content-between align-items-center fw-semibold mb-4">
+            <span>View Court</span>
+            <button type="button" class="btn btn-outline-dark ms-auto" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <a href="{% url "add_court" %}" class="text-black">Add Court</a>
+            </button>
+        </h5>
+        <div class="table-responsive">
+        <table class="table text-nowrap mb-0 align-middle">
+            <thead class="text-dark fs-4">
+            <tr>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Id</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Name</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Price</h6>
+                </th>
+                {% comment %} <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Available Courts</h6>
+                </th> {% endcomment %}
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Image</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Active/Inactive</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Update</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Delete</h6>
+                </th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                          <div class="alert alert-danger mt-3 text-center" role="alert" style="color: black;" id="alertMessage">
+                            {{ message }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+            {% for c in court %}
+            <tr>
+                <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1"></h6>
+                    <span class="fw-semibold mb-0 fs-4">{{ c.name }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                <p class="fw-semibold mb-0 fs-4">{{ c.price }}</p>
+                </td>
+                {% comment %} <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1"></h6>
+                    <span class="fw-semibold mb-0 fs-4">4</span>                          
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ c.court_image.url }}" alt="image" style="height: 5rem; width: 7rem;" class="img-fluid">
+                </div>
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <form action="{% url 'court_status' c.id %}" method="post">
+                            {% csrf_token %}
+                            {% if c.is_active %}
+                                <button type="submit" class="btn btn-success" name="status" value="inactive">Active</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-secondary" name="status" value="active">Inactive</button>
+                            {% endif %}
+                        </form>
+                    </h6>
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <button type="button" class="btn btn-warning"><a href="{% url 'update_court' c.id %}" class='text-white'>Update</a></button>
+                    </h6>
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <button type="button" class="btn btn-danger"><a href="{% url 'delete_court' c.id %}" class='text-white'>Delete</a></button>
+                    </h6>
+                </td>
+            </tr>
+            {% endfor %}                      
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="pagination" class="d-flex justify-content-center my-4">
+    <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()">Previous</button>&nbsp
+    <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // Add a delay function to remove the alert message after 5 seconds
+    window.setTimeout(function() {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage) {
+            alertMessage.remove();
+        }
+    }, 2000);
+</script>
+
+<script>
+    var currentPage = 1;
+    var customersPerPage = 10;
+    var customers = document.querySelectorAll('.table tbody tr');
+    var pagination = document.getElementById('pagination');
+
+    function showCustomers() {
+        var startIndex = (currentPage - 1) * customersPerPage;
+        var endIndex = startIndex + customersPerPage;
+
+        for (var i = 0; i < customers.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                customers[i].style.display = 'table-row';
+            } else {
+                customers[i].style.display = 'none';
+            }
+        }
+
+        // Show or hide pagination buttons based on the number of customers
+        if (customers.length > customersPerPage) {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>&nbsp
+                <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()" ${customers.length - endIndex <= 0 ? 'style="display: none;"' : ''}>Next</button>
+            `;
+        } else {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>
+            `;
+        }
+    }
+
+    function nextPage() {
+        currentPage++;
+        showCustomers();
+    }
+
+    function previousPage() {
+        currentPage--;
+        showCustomers();
+    }
+
+    showCustomers();
+</script>
+
+{% endblock content %}
+
+
+

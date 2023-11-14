@@ -1,0 +1,363 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+  <style>
+    #container-fluid1{
+      background-image: url("{% static 'images/cover10.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: 100vw 100vh;
+      background-attachment: fixed;
+    }
+
+    #container-fluid2{
+      {% comment %} background-image: url("{% static 'images/cover10.jpg' %}"); {% endcomment %}
+      background-color: white;
+      background-repeat: no-repeat;
+      background-size: 100vw 100vh;
+      background-attachment: fixed;
+    }
+
+    #container-fluid3{
+      {% comment %} background-image: url("{% static 'images/cover10.jpg' %}"); {% endcomment %}
+      background-color: maroon;
+      background-repeat: no-repeat;
+      background-size: 100vw 100vh;
+      background-attachment: fixed;
+
+    }
+
+    .body{
+      background-image: url("{% static 'images/cover10.jpg' %}"); 
+      background-color: white;
+      background-repeat: no-repeat;
+      background-size: 100vw 100vh;
+      background-attachment: fixed;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+  }
+
+  .bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+  }
+
+  .content {
+      position: relative;
+      text-align: center;
+      width: 100%;
+      color: white;
+  }
+
+  .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+
+  /* Add your CSS here for styling */
+  .description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: 20px;
+  }
+  
+  .icon {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+  }
+
+  @media only screen and (max-width: 600px) {
+      /* Add your CSS for mobile screens here */
+      .description {
+          margin: 10px;
+      }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .col-md-4 {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+  
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+  }
+  40% {
+      transform: translateY(-30px);
+  }
+  60% {
+      transform: translateY(-15px);
+  }
+}
+
+.bg-video {
+  animation: bounce 4s infinite;
+}
+
+/*footer*/
+.col_white_amrc { color:#FFF;}
+footer { width:100%; background-color:#263238; min-height:250px; padding:10px 0px 25px 0px ;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+	list-style-type:none;
+	padding:0px;
+	display:table;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#999; margin:0 12px;}
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}
+
+
+  </style>
+
+</head>
+<body class="body">
+
+<nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url "index" %}">
+      <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt="">
+      <b>BADMINTON</b></a>
+  </div>
+</nav>
+
+<div class="container-fluid pt-5 pb-2" style="height: 100%;">
+    <section>
+      <video autoplay muted loop class="bg-video">
+        <source src="{% static "video/badminton.mp4" %}" type="video/mp4">
+      </video>
+        <div class="row d-flex">
+            <div class="col-12 col-md-10">
+                {% comment %} <div class="card text-black" style="border-radius: 25px;"> {% endcomment %}
+                        <div class="row">
+                            <div class="col-12 col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <div class="d-grid gap-3">
+
+                                  <h1 class="text-center mt-5">BADMINTON COURT BOOKING </br> IS JUST A CLICK AWAY</h1>
+                                  <h2 class="text-center"><span>BOOK YOUR SLOT NOW</span></h2>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                {% comment %} </div> {% endcomment %}
+            </div>
+        </div>
+    </section>
+    <div class="row" style="margin-top: 4.5rem;">
+      <div class="col-md-12 text-center">
+          <a href="#container-fluid1" class="scrollto wow fadeInUp delay-5s" style="text-decoration: none;">
+              <p class="center-text">
+                  <span style="color: white;">SEE MORE</span><br>
+                  <span style="color: white;"><i class="fa fa-angle-down"></i></span>
+              </p>
+          </a>
+      </div>
+  </div>
+    
+</div>
+
+
+<div class="container-fluid pt-5 pb-2" id="container-fluid1" style="height: 90%;">
+  <section>
+      <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-12 col-md-10">
+              {% comment %} <div class="card text-black" style="border-radius: 25px;"> {% endcomment %}
+                  <div class="card-body md-1">
+                      <div class="row justify-content-center">
+                          <div class="col-12 col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                              <div class="d-grid gap-3">
+
+                                <h1>MAKE YOUR RESERVATION</h1>
+
+                                <P><b>Badminton CRS allows you to book specific court slots conveniently, ensuring seamless access to facilities and organized gameplay for enthusiasts and players alike.</b></P>
+                                  <a href="{% url "login_page" %}" class="d-flex justify-content-center" style="text-decoration: none;">
+                                      <button type="button" class="btn btn-lg btn-block" style="width: 100%; color: red; background: white;"><b>Let's get started</b></button>
+                                  </a>
+                                  
+                                  {% comment %} <a href="#" class="d-flex justify-content-center" style="text-decoration: none;">
+                                      <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#login" style="width: 100%;">Login</button>
+                                  </a> {% endcomment %}
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              {% comment %} </div> {% endcomment %}
+          </div>
+      </div>
+  </section>
+</div>
+
+
+<div class="container-fluid pt-5 pb-2" id="container-fluid2" style="height: auto;">
+  <section>
+      <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-md-4 col-sm-12">
+              <!-- First Description -->
+              <div class="description text-black">
+                <i class="fa fa-search" style=" height: 2rem; width: 2rem;" aria-hidden="true"></i><br>
+                  <h6>Search</h6>
+                  <p>Are you looking to play after work, organize your Sunday Five's football match? Explore the largest network of sports facilities all over India.</p>
+              </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+              <!-- Second Description -->
+              <div class="description text-black">
+                  <i class="fa fa-calendar" style=" height: 2rem; width: 2rem;" aria-hidden="true"></i><br>
+                  <h6>Book</h6>
+                  <p>Once you’ve found the perfect ground, court or gym, Connect with the venue through the Book Now Button to make online booking & secure easier payment.</p>
+              </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+              <!-- Third Description -->
+              <div class="description text-black">
+                <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt=""><br>
+                  <h6>Play</h6>
+                  <p>You’re the hero, you’ve found a stunning turf or court, booked with ease and now it's time to play. The scene is set for your epic match.</p>
+              </div>
+          </div>
+      </div>
+  </section>
+</div>
+
+
+<!--footer starts from here-->
+<footer class="footer pt-2" id="container-fluid3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url "index" %}">
+      <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt="">
+      <b>BADMINTON</b></a>
+  </div>
+  <div class="container bottom_border">
+    <div class="row">
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Payment</h3>
+  
+        <p class="mb10"><b>Paypal</b></p>
+        
+        <img src="{% static 'images/payment.png' %}" class="img-fluid" alt="">  
+  
+      </div>
+  
+  
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Customer Support</h3>
+        <!--headin5_amrc-->
+        <ul class="footer_ul_amrc">
+          <li><a href="{% url "about_page" %}" style="text-decoration: none"><b>About us</b></a></li>
+          <li><a href="{% url "terms" %}" style="text-decoration: none"><b>Terms and Conditions</b></a></li>
+          <li><a href="{% url "cancellation" %}" style="text-decoration: none"><b>Refund & Cancellation Policy</b></a></li>
+          <li><a href="{% url "user_book_history" %}" style="text-decoration: none"><b>Track Your Bookings</b></a></li>
+        </ul>
+        <!--footer_ul_amrc ends here-->
+      </div>
+  
+  
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Contact Info</h3>
+  
+        <p class="mb10"><b>
+          Badminton Plaza Mall,<br>
+          Opposite St. Xavier's University,<br>
+          AA III, Newtown, India 670160
+        </b></p>
+        {% comment %} <p><i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p> {% endcomment %}
+        <p><i class="fa fa-phone"></i> <b>  +91-9999878398  </b></p>
+        <p><i class="fa fa fa-envelope"></i><b> info@example.com </b> </p>
+  
+  
+      </div>
+  
+  
+      {% comment %} <div class=" col-sm-4 col-md  col-12 col">
+        <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
+        <!--headin5_amrc ends here-->
+        
+        <ul class="footer_ul2_amrc">
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+        </ul>
+      <!--footer_ul2_amrc ends here-->
+      </div> {% endcomment %}
+    </div>
+  </div>
+  
+  
+  <div class="container">
+    {% comment %} <ul class="foote_bottom_ul_amrc">
+      <li><a href="http://webenlance.com">Home</a></li>
+      <li><a href="http://webenlance.com">About</a></li>
+      <li><a href="http://webenlance.com">Services</a></li>
+      <li><a href="http://webenlance.com">Pricing</a></li>
+      <li><a href="http://webenlance.com">Blog</a></li>
+      <li><a href="http://webenlance.com">Contact</a></li>
+    </ul> {% endcomment %}
+    <!--foote_bottom_ul_amrc ends here-->
+    <p class="text-center pt-3">Copyright @2023</a></p>
+  
+    <!--social_footer_ul ends here-->
+  </div>
+  
+</footer>
+
+
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <!-- Include Bootstrap JavaScript -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/all.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

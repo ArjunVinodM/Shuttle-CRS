@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modernize Free</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">UI COMPONENTS</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-article"></i>
+                </span>
+                <span class="hide-menu">Buttons</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-alert-circle"></i>
+                </span>
+                <span class="hide-menu">Alerts</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Card</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-file-description"></i>
+                </span>
+                <span class="hide-menu">Forms</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-typography"></i>
+                </span>
+                <span class="hide-menu">Typography</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">AUTH</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-login"></i>
+                </span>
+                <span class="hide-menu">Login</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user-plus"></i>
+                </span>
+                <span class="hide-menu">Register</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">EXTRA</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-mood-happy"></i>
+                </span>
+                <span class="hide-menu">Icons</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-aperture"></i>
+                </span>
+                <span class="hide-menu">Sample Page</span>
+              </a>
+            </li>
+          </ul>
+          <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+            <div class="d-flex">
+              <div class="unlimited-access-title me-3">
+                <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
+                <a href="https://adminmart.com/product/modernize-bootstrap-5-admin-template/" target="_blank" class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a>
+              </div>
+              <div class="unlimited-access-img">
+                <img src="../assets/images/backgrounds/rocket.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Sample Page</h5>
+            <p class="mb-0">This is a sample page </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+</body>
+
+</html>
+
+
+
+
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .custom-btn {
+        width: 100px; /* You can adjust the width as needed */
+    }
+    .btn:hover .text-black {
+        color: white !important;
+    }
+</style>
+
+<div class="col-lg-12 d-flex align-items-stretch pt-5">
+    <div class="card w-100">
+    <div class="card-body p-4">
+        <h5 class="card-title d-flex justify-content-between align-items-center fw-semibold mb-4">
+            <span>Booking History</span>
+            <button type="button" class="btn btn-outline-dark ms-auto" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <i class="fas fa-filter"></i>
+                <a href="#" class="text-black">Filter</a>
+            </button>
+        </h5>
+        <div class="table-responsive">
+        <table class="table text-nowrap mb-0 align-middle">
+            <thead class="text-dark fs-4">
+            <tr>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Id</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Customer Details</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Asigned Turf</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Booked Date</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Booked Time</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Payment Method/Status</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Price</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Action</h6>
+                </th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                          <div class="alert alert-danger mt-3 text-center" role="alert" style="color: black;" id="alertMessage">
+                            {{ message }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+            {% for i in history %}
+            <tr>
+                <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td>
+                {% comment %} <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4"></span>                          
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.customer_name }}</h6>
+                    <span class="fw-normal">Mobile No.{{ i.customer_phone }}</span> 
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.turf.name }}</h6>
+                    <span class="fw-normal">Court No.{{ i.court }}</span> 
+                </td>
+                {% comment %} <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.date }}</h6>
+                    <span class="fw-normal">From: {{ i.start }}- To :{{ i.end }}</span> 
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4">{{ i.date|date:"d-m-Y" }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4">{{ i.start }}-{{ i.end }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.payment }}</h6>
+                    <span class="fw-normal">Status.{{ i.payment_status }}</span> 
+                </td>
+
+                <td class="border-bottom-0">
+                    <p class="fw-semibold mb-0 fs-4"><i class="fas fa-rupee-sign fa-xl" style="color: #000000;"></i>{{ i.price }}</p>
+                </td>
+
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <button type="button" class="btn btn-danger"><a href="{% url 'cancel_court' i.id %}" class='text-white'>Cancel</a></button>
+                    </h6>
+                </td>
+            </tr>
+            {% endfor %}                      
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasExampleLabel">Filter by Court Name</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="filterForm">
+            <div class="mb-3">
+                <label for="courtName" class="form-label">Court Name</label>
+                <input type="text" class="form-control" id="courtName" name="courtName">
+            </div>
+            <div class="mb-3">
+                <label for="bookingDate" class="form-label">Booking Date</label>
+                <input type="date" class="form-control" id="bookingDate" name="bookingDate">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="filterTable()">Apply Filter</button>
+            <button type="button" class="btn btn-secondary" onclick="removeFilter()">Remove Filter</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="pagination" class="d-flex justify-content-center my-4">
+    <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()">Previous</button>&nbsp
+    <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // Add a delay function to remove the alert message after 5 seconds
+    window.setTimeout(function() {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage) {
+            alertMessage.remove();
+        }
+    }, 5000);
+</script>
+
+<script>
+    var currentPage = 1;
+    var customersPerPage = 10;
+    var customers = document.querySelectorAll('.table tbody tr');
+    var pagination = document.getElementById('pagination');
+
+    function showCustomers() {
+        var startIndex = (currentPage - 1) * customersPerPage;
+        var endIndex = startIndex + customersPerPage;
+
+        for (var i = 0; i < customers.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                customers[i].style.display = 'table-row';
+            } else {
+                customers[i].style.display = 'none';
+            }
+        }
+
+        // Show or hide pagination buttons based on the number of customers
+        if (customers.length > customersPerPage) {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>&nbsp
+                <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()" ${customers.length - endIndex <= 0 ? 'style="display: none;"' : ''}>Next</button>
+            `;
+        } else {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>
+            `;
+        }
+    }
+
+    function nextPage() {
+        currentPage++;
+        showCustomers();
+    }
+
+    function previousPage() {
+        currentPage--;
+        showCustomers();
+    }
+
+    showCustomers();
+</script>
+
+<script>
+    function filterTable() {
+        let inputCourt = document.getElementById("courtName").value.trim().toUpperCase();
+        let inputDate = document.getElementById("bookingDate").value.trim();
+        let table = document.querySelector(".table");
+        let tr = table.querySelectorAll("tbody tr");
+    
+        for (let i = 0; i < tr.length; i++) {
+            let tdCourt = tr[i].querySelectorAll("td")[2];
+            let tdDate = tr[i].querySelectorAll("td")[3];
+    
+            if (tdCourt && tdDate) {
+                let txtValueCourt = tdCourt.textContent || tdCourt.innerText;
+                let txtValueDate = (tdDate.textContent || tdDate.innerText).trim();;
+    
+                console.log('txtValueCourt:', txtValueCourt);
+                console.log('txtValueDate:', txtValueDate);
+                console.log('inputDate:', inputDate);
+                console.log('Formatted inputDate:', formatDateInput(inputDate));
+    
+                if (
+                    txtValueCourt.toUpperCase().includes(inputCourt) &&
+                    (inputDate === "" || txtValueDate === formatDateInput(inputDate))
+                ) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    
+    function formatDateInput(dateString) {
+        const [year, month, day] = dateString.split("-");
+        return `${day}-${month}-${year}`;
+    }    
+
+
+    function removeFilter() {
+        let table, tr, i;
+        table = document.querySelector(".table");
+        tr = table.querySelectorAll("tbody tr");
+        for (i = 0; i < tr.length; i++) {
+            tr[i].style.display = "";
+        }
+        document.getElementById("courtName").value = ""; // Reset the input field
+        document.getElementById("bookingDate").value = ""; // Reset the input field
+    }
+</script>
+
+
+{% endblock content %}
+
+
+
+
+
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .custom-btn {
+        width: 100px; /* You can adjust the width as needed */
+    }
+    .btn:hover .text-black {
+        color: white !important;
+    }
+</style>
+
+<div class="col-lg-12 d-flex align-items-stretch pt-5">
+    <div class="card w-100">
+    <div class="card-body p-4">
+        <h5 class="card-title d-flex justify-content-between align-items-center fw-semibold mb-4">
+            <span>Booking History</span>
+            <button type="button" class="btn btn-outline-dark ms-auto" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <i class="fas fa-filter"></i>
+                <a href="#" class="text-black">Filter</a>
+            </button>
+        </h5>
+        <div class="table-responsive">
+        <table class="table text-nowrap mb-0 align-middle">
+            <thead class="text-dark fs-4">
+            <tr>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Id</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Customer Details</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Asigned Turf</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Booked Date</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Booked Time</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Payment Method/Status</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Price</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Action</h6>
+                </th>
+                
+            </tr>
+            </thead>
+            <tbody>
+                {% for message in messages %}
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                          <div class="alert alert-danger mt-3 text-center" role="alert" style="color: black;" id="alertMessage">
+                            {{ message }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+            {% for i in history %}
+            <tr>
+                <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td>
+                {% comment %} <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4"></span>                          
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.customer_name }}</h6>
+                    <span class="fw-normal">Mobile No.{{ i.customer_phone }}</span> 
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.turf.name }}</h6>
+                    <span class="fw-normal">Court No.{{ i.court }}</span> 
+                </td>
+                {% comment %} <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.date|date:"d-m-Y" }}</h6>
+                    <span class="fw-normal">From: {{ i.start }}- To :{{ i.end }}</span> 
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4">{{ i.date }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                    <span class="fw-semibold mb-0 fs-4">{{ i.start }}-{{ i.end }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1">{{ i.payment }}</h6>
+                    <span class="fw-normal">Status.{{ i.payment_status }}</span> 
+                </td>
+
+                <td class="border-bottom-0">
+                    <p class="fw-semibold mb-0 fs-4"><i class="fas fa-rupee-sign fa-xl" style="color: #000000;"></i>{{ i.price }}</p>
+                </td>
+
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <button type="button" class="btn btn-danger"><a href="{% url 'cancel_court' i.id %}" class='text-white'>Cancel</a></button>
+                    </h6>
+                </td>
+            </tr>
+            {% endfor %}                      
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasExampleLabel">Filter by Court Name</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="filterForm">
+            <div class="mb-3">
+                <label for="courtName" class="form-label">Court Name</label>
+                <input type="text" class="form-control" id="courtName" name="courtName">
+            </div>
+            <div class="mb-3">
+                <label for="bookingDate" class="form-label">Booking Date</label>
+                <input type="date" class="form-control" id="bookingDate" name="bookingDate">
+            </div>
+            <div class="mb-3">
+                <label for="start-time" class="text-black">Start Time:</label>
+                <select id="start-time" class="form-control" name='starttime'></select>
+                <label for="end-time" class="text-black">End Time:</label>
+                <select id="end-time" class="form-control" name='endtime'></select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="filterTable()">Apply Filter</button>
+            <button type="button" class="btn btn-secondary" onclick="removeFilter()">Remove Filter</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="pagination" class="d-flex justify-content-center my-4">
+    <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()">Previous</button>&nbsp
+    <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // Add a delay function to remove the alert message after 5 seconds
+    window.setTimeout(function() {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage) {
+            alertMessage.remove();
+        }
+    }, 5000);
+</script>
+
+<script>
+    var currentPage = 1;
+    var customersPerPage = 10;
+    var customers = document.querySelectorAll('.table tbody tr');
+    var pagination = document.getElementById('pagination');
+
+    function showCustomers() {
+        var startIndex = (currentPage - 1) * customersPerPage;
+        var endIndex = startIndex + customersPerPage;
+
+        for (var i = 0; i < customers.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                customers[i].style.display = 'table-row';
+            } else {
+                customers[i].style.display = 'none';
+            }
+        }
+
+        // Show or hide pagination buttons based on the number of customers
+        if (customers.length > customersPerPage) {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>&nbsp
+                <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()" ${customers.length - endIndex <= 0 ? 'style="display: none;"' : ''}>Next</button>
+            `;
+        } else {
+            pagination.innerHTML = `
+                <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()" ${currentPage === 1 ? 'style="display: none;"' : ''}>Previous</button>
+            `;
+        }
+    }
+
+    function nextPage() {
+        currentPage++;
+        showCustomers();
+    }
+
+    function previousPage() {
+        currentPage--;
+        showCustomers();
+    }
+
+    showCustomers();
+</script>
+
+<script>
+    function filterTable() {
+        let inputCourt = document.getElementById("courtName").value.trim().toUpperCase();
+        let inputDate = document.getElementById("bookingDate").value.trim();
+        let startTime = document.getElementById("start-time").value;
+        let endTime = document.getElementById("end-time").value;
+        let timeRange = `${startTime} - ${endTime}`;
+        let table = document.querySelector(".table");
+        let tr = table.querySelectorAll("tbody tr");
+    
+        for (let i = 0; i < tr.length; i++) {
+            let tdCourt = tr[i].querySelectorAll("td")[2];
+            let tdDate = tr[i].querySelectorAll("td")[3];
+            let tdTime = tr[i].querySelectorAll("td")[4];
+    
+            if (tdCourt && tdDate && tdTime) {
+                let txtValueCourt = tdCourt.textContent || tdCourt.innerText;
+                let txtValueDate = (tdDate.textContent || tdDate.innerText).trim();
+                let txtValueTime = (tdTime.textContent || tdTime.innerText).trim();
+    
+                console.log('txtValueCourt:', startTime);
+                console.log('txtValueDate:', txtValueTime);
+                console.log('inputDate:', endTime);
+                console.log('inputDate:', convertTimeRangeTo12HourFormat(timeRange));
+                console.log('Formatted inputDate:', isTimeInRange(txtValueTime, timeRange));
+    
+                if (
+                    txtValueCourt.toUpperCase().includes(inputCourt) &&
+                    (inputDate === "" || txtValueDate === formatDate(inputDate)) &&
+                    (txtValueTime === convertTimeRangeTo12HourFormat(timeRange))
+
+                ) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function convertTimeTo12HourFormat(time) {
+        const [hour, minute] = time.split(":");
+        const hourInt = parseInt(hour, 10);
+        let period = 'a.m.';
+    
+        if (hourInt >= 12) {
+            period = 'p.m.';
+        }
+    
+        let hour12Format = hourInt % 12 || 12; // Convert to 12-hour format
+        if (minute === '00') {
+            return `${hour12Format} ${period}`;
+        } else {
+            return `${hour12Format}:${minute} ${period}`;
+        }
+    }
+    
+    function convertTimeRangeTo12HourFormat(timeRange) {
+        const [startTime, endTime] = timeRange.split(" - ");
+        const convertedStartTime = convertTimeTo12HourFormat(startTime);
+        const convertedEndTime = convertTimeTo12HourFormat(endTime);
+        return `${convertedStartTime}-${convertedEndTime}`;
+    }
+    
+    function formatDate(dateString) {
+        const months = {
+            '01': 'Jan.',
+            '02': 'Feb.',
+            '03': 'Mar.',
+            '04': 'Apr.',
+            '05': 'May.',
+            '06': 'Jun.',
+            '07': 'Jul.',
+            '08': 'Aug.',
+            '09': 'Sep.',
+            '10': 'Oct.',
+            '11': 'Nov.',
+            '12': 'Dec.',
+        };
+    
+        const [year, month, day] = dateString.split('-');
+        const formattedMonth = months[month];
+        const formattedDay = parseInt(day);
+    
+        return `${formattedMonth} ${formattedDay}, ${year}`;
+    }
+       
+
+
+    function removeFilter() {
+        let table, tr, i;
+        table = document.querySelector(".table");
+        tr = table.querySelectorAll("tbody tr");
+        for (i = 0; i < tr.length; i++) {
+            tr[i].style.display = "";
+        }
+        document.getElementById("courtName").value = ""; // Reset the input field
+        document.getElementById("bookingDate").value = ""; // Reset the input field
+    }
+</script>
+
+<script>
+    // Function to convert 24-hour format to 12-hour format
+    function convertTo12HourFormat(hour) {
+        if (hour === 0) {
+            return '12 am';
+        } else if (hour === 12) {
+            return '12 pm';
+        } else if (hour > 12) {
+            return (hour - 12) + ' pm';
+        } else {
+            return hour + ' am';
+        }
+    }
+
+    // Function to populate the time options in the select elements
+    function populateTimeOptions(startSelect, endSelect) {
+
+        const defaultOption = document.createElement("option");
+        defaultOption.text = "Select a time";
+        defaultOption.selected = true;
+        startSelect.add(defaultOption);
+        endSelect.add(defaultOption.cloneNode(true));
+        // Populate the start time options
+        for (let i = 5; i <= 22; i++) {
+          let hour12Format = convertTo12HourFormat(i);
+          let timeOption = document.createElement("option");
+          timeOption.text = hour12Format;
+          timeOption.value = i + ':00';
+          startSelect.add(timeOption);
+        }
+      
+        // Populate the end time options
+        for (let i = 6; i <= 23; i++) {
+          let hour12Format = convertTo12HourFormat(i);
+          let timeOption = document.createElement("option");
+          timeOption.text = hour12Format;
+          timeOption.value = i + ':00';
+          endSelect.add(timeOption);
+        }
+      }
+
+    // Populating the start and end time select elements
+    const startTimeSelect = document.getElementById('start-time');
+    const endTimeSelect = document.getElementById('end-time');
+    populateTimeOptions(startTimeSelect, endTimeSelect);
+</script>
+
+
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="card mb-3 col-sm-12 mx-auto" style="max-width: 80rem; overflow: auto;">
+            <div class="card-body d-flex flex-wrap justify-content-around p-3" style="max-height: 42.5rem; overflow-y: auto;">
+                
+                <div class="container pt-3 pb-3">
+                    <div class="main-body">    
+                        <img src="{% static 'images/no_booking.jpg' %}" alt="" class="img-fluid">
+                    </div>
+                </div>                             
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

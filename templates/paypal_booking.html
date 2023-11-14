@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col-sm-12 mx-auto bg-light">
+      <div class="row mt-3 mb-3 text-center">
+        <div class="col-lg-12 col-md-8 col-sm-12 pl-3 text-center">
+            <h5 class="text-black"> {{ booking.turf.name }}</h5>
+            <h6 class="text-black"> Date : {{ booking.date }}</h6>
+            <h6 class="text-black"> Start Time : {{ booking.start }}</h6>
+            <h6 class="text-black"> End Time : {{ booking.end }}</h6>
+            <h6 class="text-black"> Court : {{ booking.court }}</h6>
+            <h6 class="text-black"> Price : {{ booking.price }}</h6><br><br>
+
+            <p class="text-black"><b>Terms & Conditions :</b></p>
+            <p class="text-black"> The above details are mentioning the court you selected.</p>
+            <p class="text-black"> If you wish to continue with your payment please click the below buynow, currently refunding is not available.</p><br>
+
+            <div style="height: 100px;">
+                {{ form.render }}
+            </div>
+            
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

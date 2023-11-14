@@ -1,0 +1,148 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+
+
+  <style>
+    .body-home{
+      text-align: center;
+    }
+    h1{
+      margin-top: 20%;
+      margin-bottom: 20%;
+      color: white;
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 7%; /* Position the text container at the top of the image */
+      left: 45%; /* Position the text container at the center of the image horizontally */
+      transform: translateX(-50%); /* Center the text container horizontally */
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+      color: black;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .overlay-button:hover{
+      color: black;
+    }
+
+    .overlay-button {
+        position: absolute;
+        top: 77%; /* Position the button at the center of the image vertically */
+        left: 50%; /* Position the button at the center of the image horizontally */
+        transform: translate(-50%, -50%); /* Center the button precisely */
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        opacity: 0; /* Hide the button by default */
+        transition: opacity 0.3s ease; /* Add a smooth transition for the button's appearance */
+    }
+
+    .card:hover .overlay-button {
+        opacity: 1; /* Show the button when hovering over the container */
+    }
+
+    .card:hover{
+      background: black;
+  }
+
+  @media (max-width: 768px) {
+    .card-img-top {
+      height: 150px; /* Set the desired height for mobile view */
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 992px) {
+    .card-img-top {
+      height: 200px; /* Set the desired height for tablet view */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .text-overlay b {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 992px) {
+    .text-overlay b {
+      font-size: 18px;
+    }
+  }
+  </style>
+
+  <section>
+    <div class="container" style="padding: 2rem;">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="card h-100">
+                <a href="#" class="btn">
+                <img class="card-img-top" height="250vh" alt="" src="{% static 'images/cover2.jpg' %}">
+                <div class="text-overlay" style="top: 0.1%;">
+                  <h2><b><span style="color: orange;">Customer</span> Details</b></h2>
+                </div>
+                <a href="#" style="text-decoration: none;" class="overlay-button">Go</a>
+                </a>  
+              </div>
+            </div>
+            <div class="col-md-6 mb-2">
+              <div class="card h-100">
+                <a href="#" class="btn">
+                <img class="card-img-top" height="250vh" alt="" src="{% static 'images/cover1.jpg' %}">
+                <div class="text-overlay" style="top: 0.1%;">
+                  <h2><b><span style="color: orange;"></span> Details</b></h2>
+                </div>
+                {% comment %} <a href="#" style="text-decoration: none;" class="overlay-button">Go</a> {% endcomment %}
+                </a>  
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-2 pt-2">
+              <div class="card h-100">
+                <a href="#" class="btn">
+                <img class="card-img-top" height="250vh" alt="" src="{% static 'images/cover.jpg' %}">
+                <div class="text-overlay text-dark" style="top: 1%;">
+                  <h2><b><span style="color: orange;">Court</span> Details</b></h2>
+                </div>
+                <a href="#" style="text-decoration: none;" class="overlay-button">Go</a>
+                </a>  
+              </div>
+            </div>
+            <div class="col-md-6 mb-2 pt-2">
+              <div class="card h-100">
+                <a href="#" class="btn">
+                <img class="card-img-top" height="250vh" alt="" src="{% static 'images/cover3.jpg' %}">
+                <div class="text-overlay text-dark" style="top: 1%;">
+                  <h2><b><span style="color: darkorange;">Bookings</span></b></h2>
+                </div>
+                <a href="#" style="text-decoration: none;" class="overlay-button">Go</a>
+                </a> 
+                </a>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  
+  {% endblock content %}

@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SCRS{% endblock title %}</title>
+
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+  <!--Owl Carousel CSS-->
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+  <!--FontAwesome CSS-->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<style>
+
+  body {
+    background-image: linear-gradient(90deg,#c75a5a,#d93434,#b21c1c);
+    
+  }
+
+  #container-fluid3{
+    {% comment %} background-image: url("{% static 'images/cover10.jpg' %}"); {% endcomment %}
+    background-color: #b21c1c;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+
+  }
+
+  @media (max-width: 767px) { /* Adjust the max-width value according to your design requirements */
+    .navbar-brand.mx-5 {
+        margin: 0 !important; /* Override the mx-5 margin */
+    }
+}
+
+
+/*footer*/
+.col_white_amrc { color:#FFF;}
+footer { width:100%; background-color:#263238; min-height:250px; padding:10px 0px 25px 0px ;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+	list-style-type:none;
+	padding:0px;
+	display:table;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#999; margin:0 12px;}
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}
+</style>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg" data-bs-theme="dark" style="background: #c75a5a;">
+    <div class="container-fluid">
+      <a class="navbar-brand mx-5" href="{% url "home" %}">
+        <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt="">
+        <b>BADMINTON</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      {% if request.user.is_authenticated %}
+      <form class="d-flex my-3 my-lg-0" action="#" method='get'>
+        <div class="input-group">
+            <input class="form-control" name="city_search_query" value="{{city_search_query}}" type="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="background: #413434;">
+            <button class="btn btn-primary" type="submit" id="search-addon" style='background: black;'>
+                <i class="fas fa-search text-white"></i>
+            </button>
+        </div>
+      </form>
+    
+      
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ms-auto mx-5">
+          <li class="nav-item">
+            <a class="nav-link me-2 {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url "home" %}">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2 {% if request.resolver_match.url_name == 'user_book_history' %}active{% endif %}" href="{% url "user_book_history" %}">My Bookings</a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link me-2" href="#">Pricing</a>
+          </li> {% endcomment %}
+          <li class="nav-item">
+            <a class="nav-link me-2 {% if request.resolver_match.url_name == 'about_page' %}active{% endif %}" href="{% url "about_page" %}">About</a>
+          </li>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center">
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {% if request.user %}
+                    {% if user.cust_image %}
+                        <img src="{{ user.cust_image.url }}" alt="" width="35" height="35" class="rounded-circle">
+                    {% else %}
+                        <!-- If cust_image is not available, provide a default image -->
+                            <img src="{% static "admin/assets/images/profile/user-1.jpg" %}" alt="" width="35" height="35" class="rounded-circle">
+                    {% endif %}
+                {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2" style="background: #413434;">
+                    <div class="message-body" >
+                        <a href="{% url "user_profile" %}" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-6 ">My Profile</p>
+                        </a>
+                        <a href="{% url "pass_change" %}" class="d-flex align-items-center gap-2 dropdown-item">
+                        <i class="ti ti-mail fs-6"></i>
+                        <p class="mb-0 fs-6 ">Change Password</p>
+                        </a>
+                        <a href="{% url "logout" %}" class="btn btn-outline-info mx-3 mt-2 d-block">Logout</a>
+                    </div>
+                </div>
+            </li>
+            </ul>
+        </div>
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+  
+
+  {% block content %}
+  {% endblock content %}
+
+  <!--footer starts from here-->
+<footer class="footer pt-2" id="container-fluid3">
+  <div class="container">
+    <a class="navbar-brand" href="{% url "index" %}">
+      <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt="">
+      <b>BADMINTON</b></a>
+  </div>
+  <div class="container bottom_border">
+    <div class="row">
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Payment</h3>
+  
+        <p class="mb10 text-white"><b>Paypal</b></p>
+        
+        <img src="{% static 'images/payment.png' %}" class="img-fluid" alt="">  
+  
+      </div>
+  
+  
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Customer Support</h3>
+        <!--headin5_amrc-->
+        <ul class="footer_ul_amrc">
+          <li><a href="{% url "about_page" %}" style="text-decoration: none" class="text-white"><b>About us</b></a></li>
+          <li><a href="{% url "terms" %}" style="text-decoration: none" class="text-white"><b>Terms and Conditions</b></a></li>
+          <li><a href="{% url "cancellation" %}" style="text-decoration: none" class="text-white"><b>Refund & Cancellation Policy</b></a></li>
+          <li><a href="{% url "user_book_history" %}" style="text-decoration: none" class="text-white"><b>Track Your Bookings</b></a></li>
+        </ul>
+        <!--footer_ul_amrc ends here-->
+      </div>
+  
+  
+      <div class=" col-sm-4 col-md  col-12 col">
+        <h3 class="headin5_amrc col_white_amrc pt2">Contact Info</h3>
+  
+        <p class="mb10 text-white"><b>
+          Badminton Plaza Mall,<br>
+          Opposite St. Xavier's University,<br>
+          AA III, Newtown, India 670160
+        </b></p>
+        {% comment %} <p><i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p> {% endcomment %}
+        <p><i class="fa fa-phone text-white"></i> <b class="text-white">  +91-9999878398  </b></p>
+        <p><i class="fa fa fa-envelope text-white"></i><b class="text-white"> info@example.com </b> </p>
+  
+  
+      </div>
+  
+  
+      {% comment %} <div class=" col-sm-4 col-md  col-12 col">
+        <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
+        <!--headin5_amrc ends here-->
+        
+        <ul class="footer_ul2_amrc">
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+          <li><a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a><p>Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a></p></li>
+        </ul>
+      <!--footer_ul2_amrc ends here-->
+      </div> {% endcomment %}
+    </div>
+  </div>
+  
+  
+  <div class="container">
+    {% comment %} <ul class="foote_bottom_ul_amrc">
+      <li><a href="http://webenlance.com">Home</a></li>
+      <li><a href="http://webenlance.com">About</a></li>
+      <li><a href="http://webenlance.com">Services</a></li>
+      <li><a href="http://webenlance.com">Pricing</a></li>
+      <li><a href="http://webenlance.com">Blog</a></li>
+      <li><a href="http://webenlance.com">Contact</a></li>
+    </ul> {% endcomment %}
+    <!--foote_bottom_ul_amrc ends here-->
+    <p class="text-center pt-3 text-white">Copyright @2023</p>
+  
+    <!--social_footer_ul ends here-->
+  </div>
+  
+</footer>
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <!-- Include Bootstrap JavaScript -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+  <script src="{% static 'js/all.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+</body>
+</html>

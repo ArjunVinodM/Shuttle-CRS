@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <p>Greetings {{ user.first_name }} {{ user.last_name }},</p><br>
+
+    <p>We thank you for registering in Badminton Air Plaza.</p>
+
+    <p>Here is your login email, mobile, and password:</p>
+
+    <p>Email: {{ user.email }}</p>
+    <p>Mobile: {{ cust_data.cust_mobile }}</p>
+    <p>Password: {{ log_pass }}</p>
+
+    <p>Keep it secure.</p><br><br>
+
+    <p>Thanks and Regards,</p>
+    <p>BADMINTON AIR PLAZA Team</p>
+
+    <img src="cid:logo" alt="Your Logo" style="height: 6rem; width: 6rem;">
+
+</body>
+</html>

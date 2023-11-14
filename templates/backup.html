@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+  .form-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .form-container label,
+  .form-container input,
+  .form-container button {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .form-container input[type="date"],
+  .form-container input[type="time"] {
+    width: 50%;
+  }
+  
+  .form-container button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    /* Adjust the width of the input field for mobile view */
+    #date {
+        width: 100%;
+    }
+
+    .loading {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .spinner {
+        margin-left: 5px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        border-top-color: #333;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+}
+
+.btn-success:active, .btn-success:focus {
+    background-color: #1ba176 !important;
+}
+</style>
+
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="col-sm-12 mx-auto bg-light">
+      <div class="row mt-3 mb-3">
+        <div class="col-sm-4 mx-auto bg-light">
+          <a>
+            <img src="{{ court.court_image.url }}" class="img-fluid" alt="" style="max-width: 100%; height: auto;">
+          </a>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 pl-3">
+            <h2 class="text-black">{{ court.name }}</h2>
+                <form action="{% url "book" %}" method='post' onsubmit="calculatePrice();">
+                    {% csrf_token %}
+                    <p class="text-black">From: {{ court.price }}</p>
+                    <div class="form-container p-4">
+                        <div class="form-group">
+                        <label for="date" class="text-black">Select Date:</label>
+                        <input type="date" id="date" class="form-control" name='date' onchange="toggleDateFields()" required>
+                        </div>
+                        <p class="text-black"><b>Terms & Conditions :</b></p>
+                        <p class="text-black"> Please read terms & conditions before reaching the court.</p>
+                        <p class="text-black">1. Tournaments and gatherings of any kind of more than 4 people in court are strictly prohibited.</p>
+
+                        <p class="text-black">2. Choose a date above to see available times to Select Your Favorite Slot.</p>
+                        
+                        <p class="text-black">3. We don't provide Badminton or any other gear.</p>
+                        <div class="form-group" style="display: none;" id="start-end-fields">
+                        <label for="start-time" class="text-black">Start Time:</label>
+                        <select id="start-time" class="form-control" name='starttime' onchange="populateEndTimes(this.value)" required></select>
+                        {% comment %} <input type="time" id="start-time" class="form-control"> {% endcomment %}
+                        </div>
+                        <div class="form-group" style="display: none;" id="end-end-fields">
+                        <label for="end-time" class="text-black">End Time:</label>
+                        <select id="end-time" class="form-control" name='endtime' onchange="calculatePrice()" required></select>
+                        {% comment %} <input type="time" id="end-time" class="form-control"> {% endcomment %}
+                        </div>
+
+                        <input type="hidden" id="turf" name="turf" value="{{ court.id }}">
+
+                        <div class="d-flex justify-content-center mt-2">
+                            <button class="btn btn-primary" type="button" id='search' onclick="searchSlots()">Search Slots</button>
+                        </div>
+
+                        <div id="availability-container" style="display: none;" class="mt-3">
+                            <div class="row">
+                                <label class="text-black">Select Court:</label>
+                                <input type="hidden" id="court" class="form-control" name="court" value="1" required>  
+                                
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100" style="background-color: #3cadd0;" type="button" onclick="sendValue(1)">Slot 1</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100" style="background-color: #3cadd0;" type="button" onclick="sendValue(2)">Slot 2</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100" style="background-color: #3cadd0;" type="button" onclick="sendValue(3)">Slot 3</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100" style="background-color: #3cadd0;" type="button" onclick="sendValue(4)">Slot 4</button>
+                                    </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-12 pl-3">
+                                <b><h6 id="price" class="text-black">Price: {{ court.price }}</h6></b>
+                            </div>
+                        
+                            <fieldset class="form-group mt-3 row">
+                                <label for="booking-type" class="text-black col-sm-4">Select Booking Type:</label>
+                                <div class="col-sm-8">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input border-black" type="radio" name="payment" id="online" value="online" checked="">
+                                    <label class="form-check-label text-black" for="optionsRadios1">Online</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input border-black" type="radio" name="payment" id="offline" value="offline">
+                                    <label class="form-check-label text-black" for="optionsRadios2">Offline</label>
+                                  </div>
+                                </div>
+                            </fieldset>
+ 
+                            <input type="hidden" id="hidden-price" name="price" value="">  
+
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-success mt-2" type="submit" style="background: green;" id="bookNowButton" onclick="handleBookNow()">Book Now</button>
+                            </div>
+                                                               
+                        </div>                    
+                    </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateField = document.getElementById("date");
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var currentMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+        var currentDay = today.getDate().toString().padStart(2, '0');
+        var minDate = currentYear + '-' + currentMonth + '-' + currentDay;
+        dateField.setAttribute('min', minDate);
+
+        var availabilityContainer = document.getElementById("availability-container");
+        availabilityContainer.style.display = "none"; // Hide initially
+        var search = document.getElementById("search");
+        search.style.display = "none";
+    });
+
+    function toggleDateFields() {
+        var dateField = document.getElementById("date");
+        var startFields = document.getElementById("start-end-fields");
+        var endFields = document.getElementById("end-end-fields");
+        if (dateField.value) {
+            startFields.style.display = "block";
+            populateSelectFields(dateField.value);
+            endFields.style.display = "block";
+            var search = document.getElementById("search");
+            search.style.display = "block";
+        } else {
+            startFields.style.display = "none";
+            endFields.style.display = "none";
+            var search = document.getElementById("search");
+            search.style.display = "none";
+        }
+    }
+
+    function searchSlots() {
+        var availabilityContainer = document.getElementById('availability-container');
+        if (availabilityContainer.style.display === 'none') {
+            availabilityContainer.style.display = 'block';
+        } else {
+            availabilityContainer.style.display = 'none';
+        }
+    }
+
+    function populateSelectFields(selectedDate) {
+        var startSelect = document.getElementById("start-time");
+        var endSelect = document.getElementById("end-time");
+        startSelect.innerHTML = '';
+        endSelect.innerHTML = '';
+        var today = new Date();
+        var selectedDay = new Date(selectedDate);
+        var currentHour = today.getHours();
+        var currentMinute = today.getMinutes();
+        var currentTime = currentHour + ":" + currentMinute;
+    
+        var startHour = 5;
+        if (selectedDay.getDate() === today.getDate() && selectedDay.getMonth() === today.getMonth() && selectedDay.getFullYear() === today.getFullYear()) {
+            if (currentHour >= 16) {
+                startHour = 23; // It's past 4 PM, so the start hour should be 11 PM
+            } else {
+                startHour = currentHour + 1; // It's before 4 PM, so the start hour should be the next hour after the current time
+            }
+        }
+    
+        for (var i = startHour; i < 23; i++) {
+            var option = document.createElement("option");
+            var displayHour = i > 12 ? i - 12 : i;
+            var displayAMPM = i >= 12 ? 'PM' : 'AM';
+            option.text = (displayHour < 10 ? '0' : '') + displayHour + ':00 ' + displayAMPM;
+            option.value = (i < 10 ? '0' : '') + i + ':00';
+            startSelect.add(option);
+        }
+    
+        for (var i = startHour + 1; i < 24; i++) {
+            var option = document.createElement("option");
+            var displayHour = i > 12 ? i - 12 : i;
+            var displayAMPM = i >= 12 ? 'PM' : 'AM';
+            option.text = (displayHour < 10 ? '0' : '') + displayHour + ':00 ' + displayAMPM;
+            option.value = (i < 10 ? '0' : '') + i + ':00';
+            endSelect.add(option);
+        }
+    }
+    
+    function populateEndTimes(startTime) {
+        var endSelect = document.getElementById("end-time");
+        endSelect.innerHTML = '';
+        var selectedHour = parseInt(startTime.split(':')[0]);
+        for (var i = selectedHour + 1; i < 24; i++) {
+            var option = document.createElement("option");
+            var displayHour = i > 12 ? i - 12 : i;
+            var displayAMPM = i >= 12 ? 'PM' : 'AM';
+            option.text = (displayHour < 10 ? '0' : '') + displayHour + ':00 ' + displayAMPM;
+            option.value = (i < 10 ? '0' : '') + i + ':00';
+            endSelect.add(option);
+        }
+    }    
+</script>
+
+<script>
+    function sendValue(value) {
+        console.log('Sending value: ', value);
+    
+        var form = document.querySelector('form');
+        var hiddenInput = document.getElementById('court');
+    
+        // Set the value of the hidden input field
+        hiddenInput.value = value;
+    
+        // Create a new event
+        var event = new Event('submit', {
+            bubbles: true,
+            cancelable: true,
+        });
+    
+        // Dispatch the event on the form
+        form.dispatchEvent(event);
+    }    
+    const pricePerHour = {{ court.price }}; // Price per hour
+
+    function calculatePrice() {
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
+
+        if (startTime && endTime) {
+            const start = new Date(`2000-01-01T${startTime}`);
+            const end = new Date(`2000-01-01T${endTime}`);
+
+            const diff = (end - start) / 1000 / 60 / 60; // Time difference in hours
+
+            const calculatedPrice = pricePerHour * diff;
+            document.getElementById('price').innerText = `Price: ${calculatedPrice.toFixed(2)}`;
+            document.getElementById('hidden-price').value = calculatedPrice.toFixed(2); // Update the hidden input field
+
+        }
+        else {
+            const calculatedPrice = pricePerHour; // Set the default price
+            document.getElementById('price').innerText = `Price: ${calculatedPrice.toFixed(2)}`;
+            document.getElementById('hidden-price').value = calculatedPrice.toFixed(2); // Update the hidden input field
+        }
+    }
+</script>
+
+<script>
+    function handleBookNow() {
+        var button = document.getElementById("bookNowButton");
+        button.innerHTML = 'Loading...<span class="spinner"></span>';
+        button.classList.add("loading");
+        // Add your booking logic here
+        // Simulate a delay with setTimeout for demonstration purposes
+        setTimeout(function() {
+            // Remove the loading state and reset the button text
+            button.innerHTML = 'Book Now';
+            button.classList.remove("loading");
+            // Add your booking logic here
+        }, 2000); // Simulating a 2-second delay
+    }
+</script>
+
+{% comment %} <script>
+    function checkBooking() {
+        let slotButtons = document.querySelectorAll(".slot-button");
+        let selectedDate = document.getElementById('date').value;
+        let selectedStartTime = document.getElementById('start-time').value;
+        let selectedEndTime = document.getElementById('end-time').value;
+
+        let buttonDisabled = false;
+
+        // AJAX call to fetch existing bookings
+        fetch('/get_existing_bookings/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                date: selectedDate,
+                start_time: selectedStartTime,
+                end_time: selectedEndTime
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the logic based on the response from the backend
+            if (data.exists) {
+                buttonDisabled = true;
+            }
+
+            for (let i = 0; i < slotButtons.length; i++) {
+                if (buttonDisabled) {
+                    slotButtons[i].setAttribute('disabled', 'disabled');
+                } else {
+                    slotButtons[i].removeAttribute('disabled');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function sendValue(slot) {
+        document.getElementById('court').value = slot;
+    }
+</script> {% endcomment %}
+
+
+{% endblock content %}
+
+
+def post(self,request,user_id):
+        
+update = Customer.objects.filter(cust_user_id=user_id).first()
+if update:
+    user = request.user
+    
+    fname = request.POST['u_fname']
+    lname = request.POST['u_lname']
+    email = request.POST['u_email']
+    
+    update.cust_mobile = request.POST.get('u_mobile')
+    update.cust_address = request.POST.get('u_address')
+    update.cust_locality = request.POST.get('u_locality')
+    update.cust_city = request.POST.get('u_city')
+    update.cust_state = request.POST.get('u_state')
+    update.cust_pincode = request.POST.get('u_pincode')
+    
+    # update.cust_image = request.FILES.get('profile_image')
+    
+    # Get the base64 data from the request
+    base64_image = request.POST.get('cropped_image') 
+
+    if base64_image and ';base64,' in base64_image:
+        print('igfghjk')
+        format, imgstr = base64_image.split(';base64,')
+        if re.match('^[A-Za-z0-9+/]+[=]{0,2}$', imgstr): 
+      
+            ext = format.split('/')[-1] 
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
+
+            update.cust_image = data 
+    update.save()
+    
+    user.first_name = fname
+    user.last_name = lname
+    user.email = email
+    
+    user.save()
+    
+    return redirect('user_profile')
+else:
+    return redirect('user_profile')
+
+#--------------------------------------------------------
+
+
+    {% extends 'base.html' %}
+    {% load static %}
+    
+    {% block content %}
+    
+    <style>
+        .cropper-container {
+            max-width: 110%;
+            height: auto;
+        }
+    
+        .cropper-view-box,
+        .cropper-face {
+            border-radius: 50%;
+        }
+    </style>
+    
+    <div class="container pt-3 pb-3">
+      <div class="main-body">
+        <div class="row">
+          {% comment %} {% for profile in profile %} {% endcomment %}
+          <div class="col-lg-4 pb-2">
+            <div class="card" style="background: #413434;">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <div class="mt-3">
+                    <div>
+                    {% if user %}
+                        {% if user.cust_image %}
+                            <img src="{{ user.cust_image.url }}" alt="" width="50" height="50" class="rounded-circle">
+                        {% else %}
+                            <!-- If cust_image is not available, provide a default image -->
+                            <img src="{% static "admin/assets/images/profile/user-1.jpg" %}" alt="" width="50" height="50" class="rounded-circle">
+                        {% endif %}
+                    {% endif %}
+                    </div><br>
+    
+                    <h4>{{ user.cust_user.first_name }} {{ user.cust_user.last_name }}</h4>
+                    <p class="text-secondary mb-1">{{ user.cust_mobile }}</p>
+                    <p class="text-muted font-size-sm">{{ user.cust_user.email }}</p>
+                    <p class="text-muted font-size-sm">{{ user.cust_address}} {{ user.cust_locality }}<br>{{ user.cust_city }} {{ user.cust_state }} {{ user.cust_pincode }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card" style="background: #902727a3">
+                <p class="text-center h1 fw-bold mb-1 mx-1 mt-1">Make Changes</p>
+              <div class="card-body">
+    
+                <form id="my-form" action="/update_profile/{{ user.id }}" method='post' enctype='multipart/form-data'>
+                  {% csrf_token %}
+    
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">First Name</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="[A-Za-z ]+" title="Please enter letters only" value="{{ user.cust_user.first_name }}" name='u_fname'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Last Name</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="[A-Za-z ]+" title="Please enter letters only" value="{{ user.cust_user.last_name }}" name='u_lname'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Email</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="^[^@]+@[^@]+\.(com|in)$" title="Should end with .com or .in, @ must." value="{{ user.cust_user.email }}" name='u_email'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Mobile</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="\d{10}" maxlength="10" title="Please enter 10 digit Mobile number" value="{{ user.cust_mobile }}" name='u_mobile'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Address</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" value="{{ user.cust_address }}" name='u_address'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Locality</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="[A-Za-z ]+" title="Please enter letters only" value="{{ user.cust_locality }}" name='u_locality'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">City</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="[A-Za-z ]+" title="Please enter letters only" value="{{ user.cust_city }}" name='u_city'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">State</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="[A-Za-z ]+" title="Please enter letters only" value="{{ user.cust_state }}" name='u_state'>
+                    </div>
+                  </div>
+                  <div class="row mt-3 d-flex flex-row align-items-center mb-2">
+                    <div class="col-sm-3">
+                      <label class="form-label" for="form3Example1c">Pincode</label>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" class="form-control" pattern="\d{6}" maxlength="6" title="Please enter upto 6 digits" value="{{ user.cust_pincode }}" name='u_pincode'>
+                    </div>
+                  </div>
+    
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="d-flex justify-content-center mb-2 mb-lg-2">
+                      <button type="submit" class="btn btn-info px-3" value="Save Changes">Save Changes</button>
+                    </div>
+                  </div>
+                  {% comment %} <div class="d-flex flex-row align-items-start mb-2">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <label class="form-label" for="form3Example1c">Image</label>
+                      <input type="file" id="form3Example1c" class="form-control" accept="image/*" value="{{ user.cust_image }}" name="profile_image" onchange="loadImage(event)">
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="image-preview" style="display: flex; align-items: flex-start; justify-content: center; height: 200px;">
+                        <div>
+                        {% if user.cust_image %}
+                            <img id="preview" src="{{ user.cust_image.url }}" alt="Image Preview" style="max-width: 200px; max-height: 200px; align-self: flex-start;" />
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}                  
+                        </div>
+                    </div>
+                  </div>  
+                </div>{% endcomment %}
+    
+                <div class="info-box">
+                    <h4 class="text-center mt-3">Profile Picture</h4>
+                </div>
+                <div class="image-container">
+                    <div class="image-box text-center">
+                        <h6>Current Profile Picture</h6>
+                        <img src="{{ user.cust_image.url }}" alt="Current Profile Picture" class="img-thumbnail preview-image">
+                    </div>
+                    <div class="image-box">
+                        <h6>Choose new Profile Picture</h6>
+                        <input type="file" name="profile_pic" accept="image/*" class="form-control" id="profilePicInput">
+                        <img id="imagePreview" class="img-thumbnail preview-image" style="display: none;">  
+                    </div>
+                    <div class="form-group text-center mt-2">
+                        <button type="submit" id="saveCroppedImageBtn" class="btn btn-primary btn-submit">Save Image</button>
+                    </div>
+                    <input type="hidden" id="croppedImage" name="cropped_image" value="">
+                </div>
+    
+                </form>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.9/dist/cropper.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.9/dist/cropper.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.js"></script>
+    
+        <script>
+            const profilePicInput = document.getElementById('profilePicInput');
+            const imagePreview = document.getElementById('imagePreview');
+            let cropper;
+        
+            profilePicInput.addEventListener('change', function () {
+                const file = profilePicInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        imagePreview.src = e.target.result;
+        
+                        if (cropper) {
+                            cropper.replace(e.target.result);
+                        } else {
+                            cropper = new Cropper(imagePreview, {
+                                aspectRatio: 1, // Set the aspect ratio as per your requirement
+                                viewMode: 1, // Set the view mode as per your requirement
+                                autoCropArea: 0.8, // Set the initial cropped area as per your requirement
+                            });
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        
+            // Add a button or trigger to save the cropped image
+            document.getElementById('saveCroppedImageBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+        
+                var croppedImage = cropper.getCroppedCanvas({
+                    width: 160,
+                    height: 160,
+                }).toDataURL('image/png');
+        
+                // Populate the hidden input field with the data URL of the cropped image
+                document.getElementById('croppedImage').value = croppedImage;
+        
+                // Submit the form manually
+                document.getElementById('my-form').submit();
+            });
+        </script>
+      
+      
+    
+    {% endblock content %}

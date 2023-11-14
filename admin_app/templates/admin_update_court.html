@@ -1,0 +1,106 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <section style=" padding: 1rem;">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-lg-12 col-xl-11">
+            <div class="card text-black" style="border-radius: 25px; margin-top: 5rem;">
+              <div class="card-body md-1">
+                {% for message in messages %}
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                          <div class="alert alert-danger mt-3 text-center" role="alert" style="color: black;" id="alertMessage">
+                            {{ message }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                <div class="row justify-content-center">
+                  <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+  
+                    <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-4 mt-1">Update Court</p><br>
+  
+                    {% comment %} {% for message in messages %}
+                    <h5>
+                      <div class="alert alert-success mt-5" style="width: 100%; color: black;">
+                          {{ message }}
+                      </div>
+                    </h5>
+                    {% endfor %} {% endcomment %}
+  
+                    <form class="mx-1 mx-md-8" action="{% url 'court_updation' court.id %}" method='post' enctype='multipart/form-data'>
+                      {% csrf_token %}
+  
+                      <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Court Name</label>
+                          <input type="text" id="form3Example1c" class="form-control" value="{{ court.name }}" name='court_name'> 
+                        </div>
+                      </div>
+  
+                      <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Price</label>
+                          <input type="text" id="form3Example1c" class="form-control" value="{{ court.price }}" name='court_price'>
+                        </div>
+                      </div>
+
+                      {% comment %} <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Courts Available</label>
+                          <input type="text" id="form3Example1c" class="form-control" name='court_price'>
+                        </div>
+                      </div> {% endcomment %}
+  
+                      {% comment %} <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Selling price</label>
+                          <input type="number" id="form3Example1c" class="form-control" name='p_selling'>
+                        </div>
+                      </div>
+  
+                      <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Discounted price</label>
+                          <input type="number" id="form3Example1c" class="form-control" name='p_discounted'>
+                        </div>
+                      </div> {% endcomment %}
+  
+                      <div class="d-flex flex-row align-items-center mb-2">
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label" for="form3Example1c">Image</label>
+                          <input type="file" id="form3Example1c" class="form-control" accept="image/*" value="{{ court.court_image }}" name='court_image'>
+                        </div>
+                      </div>
+  
+                      <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Update Court</button>
+                      </div>
+  
+                    </form>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+    </section>
+  </div>
+
+  <script>
+    // Add a delay function to remove the alert message after 5 seconds
+    window.setTimeout(function() {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage) {
+            alertMessage.remove();
+        }
+    }, 2000);
+</script>
+
+{% endblock content %}

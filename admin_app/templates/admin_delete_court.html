@@ -1,0 +1,116 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .custom-btn {
+        width: 100px; /* You can adjust the width as needed */
+    }
+</style>
+
+<div class="col-lg-12 d-flex align-items-stretch pt-5">
+    <div class="card w-100">
+    <div class="card-body p-4">
+        <h5 class="card-title fw-semibold mb-4">View Court</h5>
+        <div class="table-responsive">
+        <table class="table text-nowrap mb-0 align-middle">
+            <thead class="text-dark fs-4">
+            <tr>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Id</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Name</h6>
+                </th>
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Price</h6>
+                </th>
+                {% comment %} <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Available Courts</h6>
+                </th> {% endcomment %}
+                <th class="border-bottom-0">
+                <h6 class="fw-semibold mb-0">Court Image</h6>
+                </th>
+                <th class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0">Action</h6>
+                </th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            {% for c in court %}
+            <tr>
+                <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{ forloop.counter }}</h6></td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1"></h6>
+                    <span class="fw-semibold mb-0 fs-4">{{ c.name }}</span>                          
+                </td>
+                <td class="border-bottom-0">
+                <p class="fw-semibold mb-0 fs-4">{{ c.price }}</p>
+                </td>
+                {% comment %} <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-1"></h6>
+                    <span class="fw-semibold mb-0 fs-4">4</span>                          
+                </td> {% endcomment %}
+                <td class="border-bottom-0">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ c.court_image.url }}" alt="image" style="height: 5rem; width: 7rem;" class="img-fluid">
+                </div>
+                </td>
+                <td class="border-bottom-0">
+                    <h6 class="fw-semibold mb-0 fs-4">
+                        <button type="button" class="btn btn-danger"><a href="{% url 'delete_court' c.id %}" class='text-white'>Delete</a></button>
+                    </h6>
+                </td>
+            </tr>
+            {% endfor %}                      
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="pagination" class="d-flex justify-content-center my-4">
+    <button type="button" class="btn btn-secondary custom-btn" onclick="previousPage()">Previous</button>&nbsp
+    <button type="button" class="btn btn-secondary custom-btn" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    var currentPage = 1;
+    var customersPerPage = 10;
+    var customers = document.querySelectorAll('.table tbody tr');
+
+    function showCustomers() {
+        var startIndex = (currentPage - 1) * customersPerPage;
+        var endIndex = startIndex + customersPerPage;
+
+        for (var i = 0; i < customers.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                customers[i].style.display = 'table-row';
+            } else {
+                customers[i].style.display = 'none';
+            }
+        }
+    }
+
+    function nextPage() {
+        currentPage++;
+        if (currentPage > Math.ceil(customers.length / customersPerPage)) {
+            currentPage = Math.ceil(customers.length / customersPerPage);
+        }
+        showCustomers();
+    }
+
+    function previousPage() {
+        currentPage--;
+        if (currentPage < 1) {
+            currentPage = 1;
+        }
+        showCustomers();
+    }
+
+    showCustomers();
+</script>
+
+{% endblock content %}

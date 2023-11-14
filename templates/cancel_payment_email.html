@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <p>Greetings {{ booking.user.first_name }} {{ booking.user.last_name }},</p><br>
+
+    <p><b>Booking made at {{ booking.turf.name }} ,<br>
+        For a match on {{ booking.date }} from {{ booking.start }} to {{ booking.end }} at court number {{ booking.court }} have been cancelled.</b></p>
+
+    <p>If any payment done will be refunded within 7 working days.</p><br>
+
+    <p>Thanks and Regards,</p>
+    <p>BADMINTON AIR PLAZA Team</p>
+
+    <img src="cid:logo" alt="Your Logo" style="height: 6rem; width: 6rem;">
+
+</body>
+</html>

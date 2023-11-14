@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SCRS{% endblock title %}</title>
+
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+  <!--Owl Carousel CSS-->
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+  <!--FontAwesome CSS-->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<style>
+  @media (max-width: 768px) {
+    .navbar-brand b {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 992px) {
+    .navbar-brand b {
+      font-size: 18px;
+    }
+  }
+
+  /* Add more media queries as needed for different screen sizes */
+</style>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg" style="background: " data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{% static "images/badminton.png"%}" style=" height: 3rem; width: 3rem;" alt="">
+        <b>BADMINTON ADMIN BASE</b></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      {% comment %} <form class="d-flex my-3 my-lg-0" action="#">
+        <div class="input-group">
+            <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
+            <button class="btn btn-primary" type="submit" id="search-addon" style='background: black;'>
+                <i class="fas fa-search text-white"></i>
+            </button>
+        </div>
+      </form> {% endcomment %}
+    
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock content %}
+
+  <!-- Include Bootstrap JavaScript -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+  <script src="{% static 'js/all.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+</body>
+</html>

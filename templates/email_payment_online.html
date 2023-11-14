@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <p>Greetings {{ court.user.first_name }} {{ court.user.last_name }},</p><br>
+
+    <p>Your Payment of {{ court.price }} has been received successfully .</p>
+
+    <p>Thank you for choosing to spend your valuable time to play a match at {{ court.turf.name }} .</p>
+
+    <p>Your match have been sheduled on {{ court.date }}, From {{ court.start }} to {{ court.end }} at court number {{ court.court }} .</p>
+
+    <p>Please ensure to reach {{ court.turf.name }} on time .</p>
+
+    <p>Good Luck to all players...</p><br><br>
+
+    <p>Thanks and Regards,</p>
+    <p>BADMINTON AIR PLAZA Team</p>
+
+    <img src="cid:logo" alt="Your Logo" style="height: 6rem; width: 6rem;">
+
+</body>
+</html>

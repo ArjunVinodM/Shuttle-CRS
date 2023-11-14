@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+  .form-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .form-container label,
+  .form-container input,
+  .form-container button {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .form-container input[type="date"],
+  .form-container input[type="time"] {
+    width: 50%;
+  }
+  
+  .form-container button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    /* Adjust the width of the input field for mobile view */
+    #date {
+        width: 100%;
+    }
+
+    .loading {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .spinner {
+        margin-left: 5px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        border-top-color: #333;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+}
+
+.btn-success:active, .btn-success:focus, {
+    background-color: #1ba176 !important;
+}
+</style>
+
+<div class="container mt-3 mb-3">
+  <div class="row">
+    {% for message in messages %}
+        {% if message.level == 'INFO' %}
+            <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-8 col-lg-6">
+                <div class="alert alert-info mt-3 text-center" role="alert" style="color: black;" id="alertMessage">
+                    {{ message }}
+                </div>
+                </div>
+            </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="col-sm-12 mx-auto bg-light">
+      <div class="row mt-3 mb-3">
+        <div class="col-sm-4 mx-auto bg-light">
+          <a>
+            <img src="{{ court.court_image.url }}" class="img-fluid" alt="" style="max-width: 100%; height: auto;">
+          </a>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 pl-3">
+            <h2 class="text-black">{{ court.name }}</h2>
+                <form action="{% url "book" %}" method='post' onsubmit="calculatePrice();">
+                    {% csrf_token %}
+                    <p class="text-black">From: {{ court.price }}</p>
+                    <div class="form-container p-4">
+                        <div class="form-group">
+                        <label for="date" class="text-black">Select Date:</label>
+                        <input type="date" id="date" class="form-control" name='date' onchange="toggleDateFields()" required>
+                        </div>
+                        <p class="text-black"><b>Terms & Conditions :</b></p>
+                        <p class="text-black"> Please read terms & conditions before reaching the court.</p>
+                        <p class="text-black">1. Tournaments and gatherings of any kind of more than 4 people in court are strictly prohibited.</p>
+
+                        <p class="text-black">2. Choose a date above to see available times to Select Your Favorite Slot.</p>
+                        
+                        <p class="text-black">3. We don't provide Badminton or any other gear.</p>
+                        <div class="form-group" style="display: none;" id="start-end-fields">
+                        <label for="start-time" class="text-black">Start Time:</label>
+                        <select id="start-time" class="form-control" name='starttime' onchange="populateEndTimes(this.value)" required></select>
+                        {% comment %} <input type="time" id="start-time" class="form-control"> {% endcomment %}
+                        </div>
+                        <div class="form-group" style="display: none;" id="end-end-fields">
+                        <label for="end-time" class="text-black">End Time:</label>
+                        <select id="end-time" class="form-control" name='endtime' onchange="calculatePrice()" required></select>
+                        {% comment %} <input type="time" id="end-time" class="form-control"> {% endcomment %}
+                        </div>
+                        <div id="availability-container" style="display: none;" class="mt-3">
+                            <div class="row">
+                                <label class="text-black">Select Court:</label>
+                                <input type="hidden" id="court" class="form-control" name="court" value="1" required>  
+                                
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100 slotButton" style="background-color: #3cadd0;" type="button" onclick="sendValue(1)">Slot 1</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100 slotButton" style="background-color: #3cadd0;" type="button" onclick="sendValue(2)">Slot 2</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100 slotButton" style="background-color: #3cadd0;" type="button" onclick="sendValue(3)">Slot 3</button>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3 mb-2">
+                                        <button class="btn btn-success w-100 slotButton" style="background-color: #3cadd0;" type="button" onclick="sendValue(4)">Slot 4</button>
+                                    </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-12 pl-3">
+                                <b><h6 id="price" class="text-black">Price: {{ court.price }}</h6></b>
+                            </div>
+                        
+                            <fieldset class="form-group mt-3 row">
+                                <label for="booking-type" class="text-black col-sm-4">Select Booking Type:</label>
+                                <div class="col-sm-8">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input border-black" type="radio" name="payment" id="online" value="online" checked="">
+                                    <label class="form-check-label text-black" for="optionsRadios1">Online</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input border-black" type="radio" name="payment" id="offline" value="offline">
+                                    <label class="form-check-label text-black" for="optionsRadios2">Offline</label>
+                                  </div>
+                                </div>
+                            </fieldset>
+                                                               
+                        </div>  
+                        <input type="hidden" id="turf" name="turf" value="{{ court.id }}"> 
+                        <input type="hidden" id="hidden-price" name="price" value="">                    
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-success mt-2" type="submit" style="background: green;" id="bookNowButton" onclick="handleBookNow()">Book Now</button>
+                    </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    // Add a delay function to remove the alert message after 5 seconds
+    window.setTimeout(function() {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage) {
+            alertMessage.remove();
+        }
+    }, 2000);
+</script>
+
+<script>
+    const slotButtons = document.querySelectorAll('.slotButton');
+    let selectedSlot = null;
+
+    slotButtons.forEach(slotButton => {
+        slotButton.addEventListener('click', function() {
+            if (selectedSlot && selectedSlot !== slotButton) {
+                selectedSlot.style.backgroundColor = '#3cadd0';
+            }
+            if (selectedSlot === slotButton) {
+                selectedSlot = null;
+            } else {
+                slotButton.style.backgroundColor = '#1ba176';
+                selectedSlot = slotButton;
+            }
+        });
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateField = document.getElementById("date");
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var currentMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+        var currentDay = today.getDate().toString().padStart(2, '0');
+        var minDate = currentYear + '-' + currentMonth + '-' + currentDay;
+        dateField.setAttribute('min', minDate);
+
+        var availabilityContainer = document.getElementById("availability-container");
+        availabilityContainer.style.display = "none"; // Hide initially
+    });
+
+    function toggleDateFields() {
+        var dateField = document.getElementById("date");
+        var startFields = document.getElementById("start-end-fields");
+        var endFields = document.getElementById("end-end-fields");
+        if (dateField.value) {
+            startFields.style.display = "block";
+            populateSelectFields(dateField.value);
+            endFields.style.display = "block";
+            var availabilityContainer = document.getElementById("availability-container");
+            availabilityContainer.style.display = "block";
+        } else {
+            startFields.style.display = "none";
+            endFields.style.display = "none";
+            var availabilityContainer = document.getElementById("availability-container");
+            availabilityContainer.style.display = "none";
+        }
+    }
+
+    function populateSelectFields(selectedDate) {
+        var startSelect = document.getElementById("start-time");
+        var endSelect = document.getElementById("end-time");
+        startSelect.innerHTML = '';
+        endSelect.innerHTML = '';
+        var today = new Date();
+        var selectedDay = new Date(selectedDate);
+        var currentHour = today.getHours();
+        var currentMinute = today.getMinutes();
+        var currentTime = currentHour + ":" + currentMinute;
+    
+        var startHour = 5;
+        if (selectedDay.getDate() === today.getDate() && selectedDay.getMonth() === today.getMonth() && selectedDay.getFullYear() === today.getFullYear()) {
+            if (currentHour >= 23) {
+                startHour = 23; // It's past 11 PM, so the start hour should be 11 PM
+            } else {
+                startHour = currentHour + 1; // It's before 11 PM, so the start hour should be the next hour after the current time
+            }
+        }
+    
+        for (var i = startHour; i < 24; i++) {
+            var option = document.createElement("option");
+            var displayHour = i > 12 ? i - 12 : i;
+            var displayAMPM = i >= 12 ? 'PM' : 'AM';
+            option.text = (displayHour < 10 ? '0' : '') + displayHour + ':00 ' + displayAMPM;
+            option.value = (i < 10 ? '0' : '') + i + ':00';
+            startSelect.add(option);
+        }
+    
+        populateEndTimes(startSelect.value); // populate end times based on the selected start time
+    }
+    
+    function populateEndTimes(startTime) {
+        var endSelect = document.getElementById("end-time");
+        endSelect.innerHTML = '';
+        var selectedHour = parseInt(startTime.split(':')[0]);
+        for (var i = selectedHour + 1; i < 24; i++) {
+            var option = document.createElement("option");
+            var displayHour = i > 12 ? i - 12 : i;
+            var displayAMPM = i >= 12 ? 'PM' : 'AM';
+            option.text = (displayHour < 10 ? '0' : '') + displayHour + ':00 ' + displayAMPM;
+            option.value = (i < 10 ? '0' : '') + i + ':00';
+            endSelect.add(option);
+        }
+    }
+     
+</script>
+
+<script>
+    function sendValue(value) {
+        console.log('Sending value: ', value);
+    
+        var form = document.querySelector('form');
+        var hiddenInput = document.getElementById('court');
+    
+        // Set the value of the hidden input field
+        hiddenInput.value = value;
+    
+        // Create a new event
+        var event = new Event('submit', {
+            bubbles: true,
+            cancelable: true,
+        });
+    
+        // Dispatch the event on the form
+        form.dispatchEvent(event);
+    }    
+    const pricePerHour = {{ court.price }}; // Price per hour
+
+    function calculatePrice() {
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
+
+        if (startTime && endTime) {
+            const start = new Date(`2000-01-01T${startTime}`);
+            const end = new Date(`2000-01-01T${endTime}`);
+
+            const diff = (end - start) / 1000 / 60 / 60; // Time difference in hours
+
+            const calculatedPrice = pricePerHour * diff;
+            document.getElementById('price').innerText = `Price: ${calculatedPrice.toFixed(2)}`;
+            document.getElementById('hidden-price').value = calculatedPrice.toFixed(2); // Update the hidden input field
+
+        }
+        else {
+            const calculatedPrice = pricePerHour; // Set the default price
+            document.getElementById('price').innerText = `Price: ${calculatedPrice.toFixed(2)}`;
+            document.getElementById('hidden-price').value = calculatedPrice.toFixed(2); // Update the hidden input field
+        }
+    }
+</script>
+
+<script>
+    function handleBookNow() {
+        var button = document.getElementById("bookNowButton");
+        button.innerHTML = 'Loading...<span class="spinner"></span>';
+        button.classList.add("loading");
+        // Add your booking logic here
+        // Simulate a delay with setTimeout for demonstration purposes
+        setTimeout(function() {
+            // Remove the loading state and reset the button text
+            button.innerHTML = 'Book Now';
+            button.classList.remove("loading");
+            // Add your booking logic here
+        }, 5000); // Simulating a 2-second delay
+    }
+</script>
+
+{% comment %} <script>
+    function checkBooking() {
+        let slotButtons = document.querySelectorAll(".slot-button");
+        let selectedDate = document.getElementById('date').value;
+        let selectedStartTime = document.getElementById('start-time').value;
+        let selectedEndTime = document.getElementById('end-time').value;
+
+        let buttonDisabled = false;
+
+        // AJAX call to fetch existing bookings
+        fetch('/get_existing_bookings/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                date: selectedDate,
+                start_time: selectedStartTime,
+                end_time: selectedEndTime
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the logic based on the response from the backend
+            if (data.exists) {
+                buttonDisabled = true;
+            }
+
+            for (let i = 0; i < slotButtons.length; i++) {
+                if (buttonDisabled) {
+                    slotButtons[i].setAttribute('disabled', 'disabled');
+                } else {
+                    slotButtons[i].removeAttribute('disabled');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function sendValue(slot) {
+        document.getElementById('court').value = slot;
+    }
+</script> {% endcomment %}
+
+
+{% endblock content %}
